@@ -73,6 +73,7 @@
       <Path>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\rtos\mqx\mqx\source\psp\cortex_m\core\M4\</Path>
     </IncludePaths>
     <SourceCodePaths>
+      <Path>C:\Users\devinc\CENG455\lab_part2_serial_echo\.metadata\.plugins\org.eclipse.cdt.make.core\</Path>
       <Path>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\</Path>
       <Path>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\platform\devices\MK64F12\startup\</Path>
       <Path>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\platform\devices\</Path>
@@ -112,9 +113,11 @@
   </PATHS>
   <FILES>
     <GeneratedCs>
+      <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\.metadata\.plugins\org.eclipse.cdt.make.core\specs.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\Cpu.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\MainTask.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\SerialTask.c</PathName>
+      <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\UserTask1.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\clockMan1.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\fsl_hwtimer1.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\fsl_mpu1.c</PathName>
@@ -253,6 +256,7 @@
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\rtos\mqx\mqx_stdlib\source\stdio\stdio.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\rtos\mqx\mqx_stdlib\source\strings\strings.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\Events.c</PathName>
+      <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\access_functions.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\main.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\os_tasks.c</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\rtos_main_task.c</PathName>
@@ -266,6 +270,7 @@
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\SDK\rtos\mqx\config\board\user_config.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\SDK\rtos\mqx\config\mcu\mqx_sdk_config.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\SerialTask.h</PathName>
+      <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\UserTask1.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\board.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\clockMan1.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Generated_Code\fsl_hwtimer1.h</PathName>
@@ -402,6 +407,8 @@
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\rtos\mqx\mqx_stdlib\source\stdio\print_prv.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\SDK\rtos\mqx\mqx_stdlib\source\stdio\scan_prv.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\Events.h</PathName>
+      <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\access_functions.h</PathName>
+      <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\constants.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\os_tasks.h</PathName>
       <PathName>C:\Users\devinc\CENG455\lab_part2_serial_echo\Sources\rtos_main_task.h</PathName>
     </GeneratedHs>

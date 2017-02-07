@@ -41,6 +41,7 @@
 #include "MainTask.h"
 #include "SerialTask.h"
 #include "myUART.h"
+#include "UserTask1.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -57,6 +58,17 @@ extern "C" {
 */
 void serial_task(os_task_param_t task_init_data);
 
+
+/*
+** ===================================================================
+**     Callback    : Task1_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task1_task(os_task_param_t task_init_data);
 
 /* END os_tasks */
 

@@ -42,6 +42,9 @@ extern "C" {
 #include "constants.h"
 
 _pool_id   message_pool;
+MUTEX_STRUCT openR_mutex;
+read_list opened_for_read[10];
+int opened_for_read_size = 0;
 
 /*
 ** ===================================================================
@@ -84,6 +87,23 @@ void serial_task(os_task_param_t task_init_data)
 	  printf("\nCount not create a message pool\n");
 	  _task_block();
    }
+
+
+   MUTEX_ATTR_STRUCT mutexattr;
+
+   /* Initialize mutex attributes */
+   if (_mutatr_init(&mutexattr) != MQX_OK) {
+      printf("Initialize mutex attributes failed.\n");
+      _task_block();
+   }
+
+   /* Initialize the mutex */
+   if (_mutex_init(&openR_mutex, &mutexattr) != MQX_OK) {
+      printf("Initialize print mutex failed.\n");
+      _task_block();
+   }
+
+   printf("\nMutex initialized\n");
 
 
 
@@ -145,6 +165,37 @@ void serial_task(os_task_param_t task_init_data)
 
 
 			break;
+		case 13:
+			printf("New Line\n");
+			for (int i = 0; i < opened_for_read_size; i++) {
+				  /*allocate a message*/
+				BUFFER_MESSAGE_PTR msg_ptr = (BUFFER_MESSAGE_PTR)_msg_alloc(message_pool);
+
+				  if (msg_ptr == NULL) {
+					 printf("\nCould not allocate a message\n");
+					 _task_block();
+				  }
+
+				  msg_ptr->HEADER.TARGET_QID = _msgq_get_id(0, opened_for_read[i].queueId);
+				  msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char) * 32;
+				  strncpy(msg_ptr->DATA, buffer, 32);
+
+				  _msgq_send(msg_ptr);
+			}
+
+			// Clear buffer
+			memset(&buffer[0], 0, sizeof(buffer));
+
+			// Clear line from screen
+			while (count > 0) {
+				UART_DRV_SendDataBlocking(myUART_IDX, "\b", sizeof(msg_ptr->DATA), 1000);
+				UART_DRV_SendDataBlocking(myUART_IDX, " ", sizeof(msg_ptr->DATA), 1000);
+				UART_DRV_SendDataBlocking(myUART_IDX, "\b", sizeof(msg_ptr->DATA), 1000);
+
+				count--;
+			}
+
+			break;
 		default:
 
 			printf(" %c \n", msg_ptr->DATA);
@@ -168,6 +219,53 @@ void serial_task(os_task_param_t task_init_data)
 	_msg_free(msg_ptr);
 
     
+#ifdef PEX_USE_RTOS   
+  }
+#endif    
+}
+
+/*
+** ===================================================================
+**     Callback    : Task1_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task1_task(os_task_param_t task_init_data)
+{
+
+	printf("%d", _task_get_id());
+
+
+	  bool result = OpenR(_task_get_id());
+
+	  if (result == false) {
+		   printf("\nOpenR failed...\n");
+	  }
+
+	  char string[32];
+
+	  result = _getline(string);
+	  printf("Got a line**\n");
+
+	  if (result == false) {
+		   printf("\_getline failed...\n");
+	  }
+
+	  printf("%s", string);
+
+
+
+
+#ifdef PEX_USE_RTOS
+  while (1) {
+#endif
+
+    
+   
+
 #ifdef PEX_USE_RTOS   
   }
 #endif    
