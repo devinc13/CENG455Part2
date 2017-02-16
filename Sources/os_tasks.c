@@ -47,7 +47,7 @@ MUTEX_STRUCT openW_mutex;
 read_list opened_for_read[10];
 int opened_for_read_size = 0;
 _task_id write_permission = 0;
-
+_queue_id server_qid;
 
 /*
 ** ===================================================================
@@ -69,7 +69,7 @@ void serial_task(os_task_param_t task_init_data)
 	int count = 0;
 
    /* open a message queue */
-   _queue_id server_qid = _msgq_open(INPUT_QUEUE, 0);
+   server_qid = _msgq_open(INPUT_QUEUE, 0);
 
    if (server_qid == 0) {
 	  printf("\nCould not open the server message queue\n");
@@ -128,7 +128,7 @@ void serial_task(os_task_param_t task_init_data)
 #endif
     
 	CHARACTER_MESSAGE_PTR msg_ptr;
-	printf("Waiting for message\n");
+//	printf("Waiting for message\n");
 	msg_ptr = _msgq_receive(server_qid, 0);
 
 	if (msg_ptr == NULL) {
@@ -188,6 +188,7 @@ void serial_task(os_task_param_t task_init_data)
 
 			break;
 		case 13:
+		case 10:
 			printf("New Line\n");
 			for (int i = 0; i < opened_for_read_size; i++) {
 				/*allocate a message*/
@@ -268,10 +269,12 @@ void Task1_task(os_task_param_t task_init_data)
 
 	while(1) {
 		result = _getline(str);
-		printf("Got a line**\n");
 
 		if (result == false) {
 			printf("\_getline failed...\n");
+			break;
+		} else {
+			printf("**Got a line**\n");
 		}
 
 		printf("Received text is: %s", str);
@@ -306,21 +309,23 @@ void Task1_task(os_task_param_t task_init_data)
 void Task2_task(os_task_param_t task_init_data)
 {
 	_queue_id writeQ;
+
+
+	writeQ = OpenW();
+
+	if (writeQ == 0) {
+		printf("\nError getting write permission\n");
+	}
+
+	char str[10];
+	strcpy(str, "PUTLINE");
+
+	_putline(writeQ, str);
   
 #ifdef PEX_USE_RTOS
   while (1) {
 #endif
     
-	  writeQ = OpenW();
-
-	  if (queue_id == 0) {
-		  printf("\nError getting write permission\n");
-	  }
-
-	  printf("\nGot write permission\n");
-
-	  _putline("**PUTLINE**");
-
     
 #ifdef PEX_USE_RTOS   
   }

@@ -75,6 +75,7 @@ Generated_Code/SerialTask.o: ../Generated_Code/SerialTask.c \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/SerialTask.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h \
  ../Generated_Code/SerialTask.h
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h:
@@ -228,5 +229,7 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/SerialTask.h:
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h:
 
 ../Generated_Code/SerialTask.h:

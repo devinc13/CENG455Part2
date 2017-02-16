@@ -1,5 +1,5 @@
-Generated_Code/mqx_ksdk.o: ../Generated_Code/mqx_ksdk.c \
- ../Generated_Code/mqx_ksdk.h ../Generated_Code/Cpu.h \
+Generated_Code/UserTask2.o: ../Generated_Code/UserTask2.c \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/fsl_device_registers.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/include/MK64F12.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/CMSIS/Include/core_cm4.h \
@@ -11,6 +11,10 @@ Generated_Code/mqx_ksdk.o: ../Generated_Code/mqx_ksdk.c \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/include/MK64F12.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/include/fsl_bitaccess.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/include/MK64F12_features.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/clockMan1.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/osa1.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/mqx_ksdk.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/Cpu.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_clock_manager.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/hal/inc/fsl_sim_hal.h \
  c:\users\devinc\ceng455\lab_part2_serial_echo\sdk\platform\hal\src\sim\mk64f12\fsl_sim_hal_mk64f12.h \
@@ -58,17 +62,6 @@ Generated_Code/mqx_ksdk.o: ../Generated_Code/mqx_ksdk.c \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/drivers/inc/fsl_mpu_driver.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_clock_manager.h \
- ../Generated_Code/osa1.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/rtos/mqx/mqx/source/bsp/bsp.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer_systick.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/board.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/pin_init.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/rtos/mqx/mqx/source/bsp/bsp_config.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/rtos_main_task.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/clockMan1.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/osa1.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/Cpu.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/pin_init.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/osa1.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/mqx_ksdk.h \
@@ -76,18 +69,16 @@ Generated_Code/mqx_ksdk.o: ../Generated_Code/mqx_ksdk.c \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/clockMan1.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/fsl_mpu1.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/fsl_hwtimer1.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer_systick.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/MainTask.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/SerialTask.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h \
- C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h \
- ../Generated_Code/MainTask.h ../Generated_Code/SerialTask.h \
- ../Generated_Code/UserTask1.h ../Generated_Code/UserTask2.h
+ ../Generated_Code/UserTask2.h
 
-../Generated_Code/mqx_ksdk.h:
-
-../Generated_Code/Cpu.h:
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/fsl_device_registers.h:
 
@@ -110,6 +101,14 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/inclu
 C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/include/fsl_bitaccess.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/devices/MK64F12/include/MK64F12_features.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/clockMan1.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/osa1.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/mqx_ksdk.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/Cpu.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_clock_manager.h:
 
@@ -205,28 +204,6 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtime
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_clock_manager.h:
 
-../Generated_Code/osa1.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/rtos/mqx/mqx/source/bsp/bsp.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer_systick.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/board.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/pin_init.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/rtos/mqx/mqx/source/bsp/bsp_config.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/rtos_main_task.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/clockMan1.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/osa1.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/Cpu.h:
-
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/pin_init.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/osa1.h:
@@ -241,6 +218,10 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/fsl_mpu1.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/fsl_hwtimer1.h:
 
+C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer_systick.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/platform/system/inc/fsl_hwtimer.h:
+
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/MainTask.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/SerialTask.h:
@@ -250,13 +231,5 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h:
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h:
-
-C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h:
-
-../Generated_Code/MainTask.h:
-
-../Generated_Code/SerialTask.h:
-
-../Generated_Code/UserTask1.h:
 
 ../Generated_Code/UserTask2.h:

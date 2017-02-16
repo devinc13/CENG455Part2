@@ -16,7 +16,7 @@
 #include "os_tasks.h"
 #include "constants.h"
 
-bool OpenR(uint16_t stream_no);
+bool OpenR(_task_id stream_no);
 bool _getline(char *string);
 _queue_id OpenW();
 bool _putline(_queue_id qid, char *string);

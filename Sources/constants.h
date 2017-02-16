@@ -30,6 +30,7 @@ typedef struct read_list
    _queue_id queueId;
 } read_list;
 
+extern _queue_id server_qid;
 extern _pool_id message_pool;
 extern read_list opened_for_read[10];
 extern int opened_for_read_size;

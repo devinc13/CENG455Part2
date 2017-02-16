@@ -77,6 +77,7 @@ Static_Code/System/PE_low_level_init.o: \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/SerialTask.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/board.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/pin_init.h
 
@@ -233,6 +234,8 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/SerialTask.h:
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/board.h:
 
