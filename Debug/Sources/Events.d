@@ -77,6 +77,7 @@ Sources/Events.o: ../Sources/Events.c \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask3.h \
  ../Sources/rtos_main_task.h ../Sources/os_tasks.h ../Sources/constants.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/rtos/mqx/mqx/source/include/message.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/SDK/rtos/mqx/mqx/source/include/mutex.h
@@ -236,6 +237,8 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h:
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h:
+
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask3.h:
 
 ../Sources/rtos_main_task.h:
 

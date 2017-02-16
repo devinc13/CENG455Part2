@@ -43,6 +43,7 @@
 #include "myUART.h"
 #include "UserTask1.h"
 #include "UserTask2.h"
+#include "UserTask3.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,6 +82,17 @@ void Task1_task(os_task_param_t task_init_data);
 ** ===================================================================
 */
 void Task2_task(os_task_param_t task_init_data);
+
+/*
+** ===================================================================
+**     Callback    : Task3_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task3_task(os_task_param_t task_init_data);
 
 /* END os_tasks */
 

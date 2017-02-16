@@ -81,9 +81,11 @@ Generated_Code/mqx_ksdk.o: ../Generated_Code/mqx_ksdk.c \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/myUART.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h \
+ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask3.h \
  C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h \
  ../Generated_Code/MainTask.h ../Generated_Code/SerialTask.h \
- ../Generated_Code/UserTask1.h ../Generated_Code/UserTask2.h
+ ../Generated_Code/UserTask1.h ../Generated_Code/UserTask2.h \
+ ../Generated_Code/UserTask3.h
 
 ../Generated_Code/mqx_ksdk.h:
 
@@ -251,6 +253,8 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask1.h:
 
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask2.h:
 
+C:/Users/devinc/CENG455/lab_part2_serial_echo/Generated_Code/UserTask3.h:
+
 C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h:
 
 ../Generated_Code/MainTask.h:
@@ -260,3 +264,5 @@ C:/Users/devinc/CENG455/lab_part2_serial_echo/Sources/os_tasks.h:
 ../Generated_Code/UserTask1.h:
 
 ../Generated_Code/UserTask2.h:
+
+../Generated_Code/UserTask3.h:

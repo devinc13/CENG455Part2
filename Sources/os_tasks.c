@@ -104,7 +104,6 @@ void serial_task(os_task_param_t task_init_data)
 
    printf("\nRead Mutex initialized\n");
 
-
    MUTEX_ATTR_STRUCT mutexattr2;
 
    /* Initialize mutex attributes */
@@ -120,7 +119,6 @@ void serial_task(os_task_param_t task_init_data)
    }
 
    printf("\nWrite Mutex initialized\n");
-
 
   
 #ifdef PEX_USE_RTOS
@@ -171,7 +169,6 @@ void serial_task(os_task_param_t task_init_data)
 				}
 			}
 
-
 			break;
 		case 21:
 			printf("Erase Line\n");
@@ -184,7 +181,6 @@ void serial_task(os_task_param_t task_init_data)
 
 				count--;
 			}
-
 
 			break;
 		case 13:
@@ -233,10 +229,8 @@ void serial_task(os_task_param_t task_init_data)
 			}
 	}
 
-
 	_msg_free(msg_ptr);
 
-    
 #ifdef PEX_USE_RTOS   
   }
 #endif    
@@ -256,7 +250,7 @@ void Task1_task(os_task_param_t task_init_data)
 	bool result = OpenR(_task_get_id());
 
 	if (result == false) {
-	   printf("\nOpenR failed...\n");
+	   printf("\nOpenR failed task 1...\n");
 	}
 
 	char str[32];
@@ -265,7 +259,7 @@ void Task1_task(os_task_param_t task_init_data)
 		result = _getline(str);
 
 		if (result == false) {
-			printf("\_getline failed...\n");
+			printf("\_getline failed task 1...\n");
 			break;
 		}
 
@@ -274,18 +268,6 @@ void Task1_task(os_task_param_t task_init_data)
 		// Clear string
 		memset(&str[0], 0, sizeof(str));
 	}
-
-
-#ifdef PEX_USE_RTOS
-  while (1) {
-#endif
-
-    
-   
-
-#ifdef PEX_USE_RTOS   
-  }
-#endif    
 }
 
 /*
@@ -301,11 +283,10 @@ void Task2_task(os_task_param_t task_init_data)
 {
 	_queue_id writeQ;
 
-
 	writeQ = OpenW();
 
 	if (writeQ == 0) {
-		printf("\nError getting write permission\n");
+		printf("\nError getting write permission task 2\n");
 	}
 
 	char str[30];
@@ -313,16 +294,50 @@ void Task2_task(os_task_param_t task_init_data)
 
 	_putline(writeQ, str);
 
-	Close();
-  
-#ifdef PEX_USE_RTOS
-  while (1) {
-#endif
-    
-    
-#ifdef PEX_USE_RTOS   
-  }
-#endif    
+	bool result = Close();
+	printf(result ? "Successfully closed task 2\n" : "Error closing task 2\n");
+}
+
+/*
+** ===================================================================
+**     Callback    : Task3_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task3_task(os_task_param_t task_init_data)
+{
+	bool result;
+
+	result = OpenR(_task_get_id());
+
+	if (result == false) {
+	   printf("\nOpenR failed task 3...\n");
+	}
+
+	_queue_id writeQ;
+	writeQ = OpenW();
+
+	if (writeQ == 0) {
+		printf("\nError getting write permission task 3\n");
+	}
+
+	char str[32];
+	result = _getline(str);
+
+	if (result == false) {
+		printf("\_getline failed...\n");
+	}
+
+	printf("Task three received: %s\n", str);
+
+	// Clear string
+	memset(&str[0], 0, sizeof(str));
+
+	result = Close();
+	printf(result ? "Successfully closed task 3\n" : "Error closing task 3\n");
 }
 
 /* END os_tasks */
