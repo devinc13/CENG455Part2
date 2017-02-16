@@ -46,7 +46,7 @@ MUTEX_STRUCT openR_mutex;
 MUTEX_STRUCT openW_mutex;
 read_list opened_for_read[10];
 int opened_for_read_size = 0;
-bool write_permission;
+_task_id write_permission = 0;
 
 
 /*
@@ -88,22 +88,38 @@ void serial_task(os_task_param_t task_init_data)
    }
 
 
-   MUTEX_ATTR_STRUCT mutexattr;
+   MUTEX_ATTR_STRUCT mutexattr1;
 
    /* Initialize mutex attributes */
-   if (_mutatr_init(&mutexattr) != MQX_OK) {
+   if (_mutatr_init(&mutexattr1) != MQX_OK) {
       printf("Initialize mutex attributes failed.\n");
       _task_block();
    }
 
    /* Initialize the mutex */
-   if (_mutex_init(&openR_mutex, &mutexattr) != MQX_OK) {
-      printf("Initialize print mutex failed.\n");
+   if (_mutex_init(&openR_mutex, &mutexattr1) != MQX_OK) {
+      printf("Initialize read mutex failed.\n");
       _task_block();
    }
 
-   printf("\nMutex initialized\n");
+   printf("\nRead Mutex initialized\n");
 
+
+   MUTEX_ATTR_STRUCT mutexattr2;
+
+   /* Initialize mutex attributes */
+   if (_mutatr_init(&mutexattr2) != MQX_OK) {
+      printf("Initialize mutex attributes failed.\n");
+      _task_block();
+   }
+
+   /* Initialize the mutex */
+   if (_mutex_init(&openW_mutex, &mutexattr2) != MQX_OK) {
+      printf("Initialize write mutex failed.\n");
+      _task_block();
+   }
+
+   printf("\nWrite Mutex initialized\n");
 
 
   
@@ -242,10 +258,6 @@ void serial_task(os_task_param_t task_init_data)
 */
 void Task1_task(os_task_param_t task_init_data)
 {
-
-	printf("%d", _task_get_id());
-
-
 	bool result = OpenR(_task_get_id());
 
 	if (result == false) {
@@ -277,6 +289,39 @@ void Task1_task(os_task_param_t task_init_data)
     
    
 
+#ifdef PEX_USE_RTOS   
+  }
+#endif    
+}
+
+/*
+** ===================================================================
+**     Callback    : Task2_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task2_task(os_task_param_t task_init_data)
+{
+	_queue_id writeQ;
+  
+#ifdef PEX_USE_RTOS
+  while (1) {
+#endif
+    
+	  writeQ = OpenW();
+
+	  if (queue_id == 0) {
+		  printf("\nError getting write permission\n");
+	  }
+
+	  printf("\nGot write permission\n");
+
+	  _putline("**PUTLINE**");
+
+    
 #ifdef PEX_USE_RTOS   
   }
 #endif    

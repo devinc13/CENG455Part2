@@ -34,7 +34,7 @@ extern _pool_id message_pool;
 extern read_list opened_for_read[10];
 extern int opened_for_read_size;
 extern MUTEX_STRUCT openR_mutex;
-extern bool write_permission;
+extern _task_id write_permission;
 extern MUTEX_STRUCT openW_mutex;
 
 

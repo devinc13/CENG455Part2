@@ -64,12 +64,62 @@ bool _getline(char *string) {
 }
 
 _queue_id OpenW() {
+	if (_mutex_lock(&openW_mutex) != MQX_OK) {
+		printf("\nMutex lock failed.\n");
+		return 0;
+	}
 
-	printf("OpenW WORKS!");
+	if (write_permission != 0) {
+		printf("\nWrite request failed\n");
+		_mutex_unlock(&openW_mutex);
+		return 0;
+	}
+
+	write_permission = _task_get_id();
+
+	_mutex_unlock(&openW_mutex);
+
+	return _msgq_get_id(INPUT_QUEUE, 0);
 }
 
 bool _putline(_queue_id qid, char *string) {
+	if (_mutex_lock(&openW_mutex) != MQX_OK) {
+		printf("\nMutex lock failed.\n");
+		return False;
+	}
+
+	_task_id task_id = _task_get_id();
+
+	if (write_permission != task_id) {
+		printf("\nTask doesn't have write permission\n");
+		_mutex_unlock(&openW_mutex);
+		return False;
+	}
+
+	strcat(string, "\n");
+
+	for (int i = 0; i < string->size(); i++) {
+		  /*allocate a message*/
+		   CHARACTER_MESSAGE_PTR msg_ptr = (CHARACTER_MESSAGE_PTR)_msg_alloc(message_pool);
+
+		  if (msg_ptr == NULL) {
+			 printf("\nCould not allocate a message\n");
+				_mutex_unlock(&openW_mutex);
+				return False;
+		  }
+
+		  msg_ptr->HEADER.TARGET_QID = qid;
+		  msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char);
+		  msg_ptr->DATA = string[i];
+
+		  _msgq_send(msg_ptr);
+		  _msg_free(msg_ptr);
+	}
+
+	_mutex_unlock(&openW_mutex);
+
 	printf("_putline WORKS!");
+	return True;
 }
 
 bool Close(void) {

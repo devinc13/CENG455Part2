@@ -8,7 +8,7 @@
 **     Repository  : KSDK 1.3.0
 **     Datasheet   : K64P144M120SF5RM, Rev.2, January 2014
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2017-02-06, 15:51, # CodeGen: 3
+**     Date/Time   : 2017-02-16, 11:29, # CodeGen: 5
 **     Abstract    :
 **
 **     Settings    :
@@ -121,6 +121,9 @@ void Components_Init(void)
   /*! UserTask1 Auto initialization start */ 
   (void)UserTask1_Init();
   /*! UserTask1 Auto initialization end */                       
+  /*! UserTask2 Auto initialization start */ 
+  (void)UserTask2_Init();
+  /*! UserTask2 Auto initialization end */                       
 }
 #endif /* CPU_COMPONENTS_INIT */
 
