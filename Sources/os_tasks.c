@@ -189,7 +189,6 @@ void serial_task(os_task_param_t task_init_data)
 			break;
 		case 13:
 		case 10:
-			printf("New Line\n");
 			for (int i = 0; i < opened_for_read_size; i++) {
 				/*allocate a message*/
 				BUFFER_MESSAGE_PTR msg_ptr = (BUFFER_MESSAGE_PTR)_msg_alloc(message_pool);
@@ -221,21 +220,16 @@ void serial_task(os_task_param_t task_init_data)
 
 			break;
 		default:
-
-			printf(" %c \n", msg_ptr->DATA);
-
 			if (count > 31) {
 				printf("Line at max length!\n");
 			} else {
-				UART_DRV_SendData(myUART_IDX, &msg_ptr->DATA, sizeof(msg_ptr->DATA));
+				UART_DRV_SendDataBlocking(myUART_IDX, &msg_ptr->DATA, sizeof(msg_ptr->DATA), 1000);
 
 				buffer[count] = msg_ptr->DATA;
 				count++;
 
 				strncpy (desired_output, buffer, count);
 				desired_output[count] = '\0';
-
-				printf("%s\n", desired_output);
 			}
 	}
 
@@ -273,16 +267,13 @@ void Task1_task(os_task_param_t task_init_data)
 		if (result == false) {
 			printf("\_getline failed...\n");
 			break;
-		} else {
-			printf("**Got a line**\n");
 		}
 
-		printf("Received text is: %s", str);
+		printf("Task one received: %s\n", str);
 
 		// Clear string
 		memset(&str[0], 0, sizeof(str));
 	}
-
 
 
 #ifdef PEX_USE_RTOS
@@ -317,10 +308,12 @@ void Task2_task(os_task_param_t task_init_data)
 		printf("\nError getting write permission\n");
 	}
 
-	char str[10];
-	strcpy(str, "PUTLINE");
+	char str[30];
+	strcpy(str, "This was sent from Task 2");
 
 	_putline(writeQ, str);
+
+	Close();
   
 #ifdef PEX_USE_RTOS
   while (1) {

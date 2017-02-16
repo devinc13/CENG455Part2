@@ -94,6 +94,7 @@ bool _putline(_queue_id qid, char *string) {
 				_mutex_unlock(&openW_mutex);
 				return false;
 		  }
+
 		  msg_ptr->HEADER.TARGET_QID = qid;
 		  msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char);
 		  msg_ptr->DATA = string[i];
@@ -107,5 +108,43 @@ bool _putline(_queue_id qid, char *string) {
 }
 
 bool Close(void) {
-	printf("Close WORKS!");
+	bool revoked = false;
+
+	// Remove write permissions if applicable
+	if (_mutex_lock(&openW_mutex) != MQX_OK) {
+		printf("\nMutex lock failed.\n");
+		return false;
+	}
+
+	_task_id task_id = _task_get_id();
+	if (write_permission == task_id) {
+		write_permission = 0;
+		revoked = true;
+	}
+
+	_mutex_unlock(&openW_mutex);
+
+	// Remove read permissions if applicable
+	if (_mutex_lock(&openR_mutex) != MQX_OK) {
+		printf("\nMutex lock failed.\n");
+		return false;
+	}
+
+	_task_id taskId = _task_get_id();
+	for (int i = 0; i < opened_for_read_size; i++) {
+		if (opened_for_read[i].taskId == taskId) {
+			// Remove from array
+			for(int g = i; g < opened_for_read_size - 1; g++) {
+				opened_for_read[g] = opened_for_read[g + 1];
+			}
+
+			opened_for_read_size--;
+			revoked = true;
+			break;
+		}
+	}
+
+	_mutex_unlock(&openR_mutex);
+
+	return revoked;
 }
