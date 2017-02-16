@@ -43,8 +43,11 @@ extern "C" {
 
 _pool_id   message_pool;
 MUTEX_STRUCT openR_mutex;
+MUTEX_STRUCT openW_mutex;
 read_list opened_for_read[10];
 int opened_for_read_size = 0;
+bool write_permission;
+
 
 /*
 ** ===================================================================
@@ -60,10 +63,6 @@ void serial_task(os_task_param_t task_init_data)
 	// This is the "Handler"
 
 	printf("serialTask Created!\n\r");
-
-//	char buf[13];
-//	sprintf(buf, "\n\rType here: ");
-//	UART_DRV_SendDataBlocking(myUART_IDX, buf, sizeof(buf), 1000);
 
 	char buffer[32] = "";
 	char desired_output[32] = "";
@@ -121,6 +120,13 @@ void serial_task(os_task_param_t task_init_data)
 	   _task_block();
 	}
 
+	// Check if a user task has called OpenR
+	if (opened_for_read_size < 1) {
+		printf("\nA user task hasn't called OpenR\n");
+		// Don't add to buffer
+		continue;
+	}
+
 	int input = msg_ptr->DATA;
 
 	switch(input){
@@ -168,19 +174,20 @@ void serial_task(os_task_param_t task_init_data)
 		case 13:
 			printf("New Line\n");
 			for (int i = 0; i < opened_for_read_size; i++) {
-				  /*allocate a message*/
+				/*allocate a message*/
 				BUFFER_MESSAGE_PTR msg_ptr = (BUFFER_MESSAGE_PTR)_msg_alloc(message_pool);
 
-				  if (msg_ptr == NULL) {
-					 printf("\nCould not allocate a message\n");
-					 _task_block();
-				  }
+				if (msg_ptr == NULL) {
+					printf("\nCould not allocate a message\n");
+					_task_block();
+				}
 
-				  msg_ptr->HEADER.TARGET_QID = _msgq_get_id(0, opened_for_read[i].queueId);
-				  msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char) * 32;
-				  strncpy(msg_ptr->DATA, buffer, 32);
+				msg_ptr->HEADER.TARGET_QID = _msgq_get_id(0, opened_for_read[i].queueId);
+				msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char) * 32;
+				strncpy(msg_ptr->DATA, buffer, 32);
 
-				  _msgq_send(msg_ptr);
+				_msgq_send(msg_ptr);
+				_msg_free(msg_ptr);
 			}
 
 			// Clear buffer
@@ -239,23 +246,27 @@ void Task1_task(os_task_param_t task_init_data)
 	printf("%d", _task_get_id());
 
 
-	  bool result = OpenR(_task_get_id());
+	bool result = OpenR(_task_get_id());
 
-	  if (result == false) {
-		   printf("\nOpenR failed...\n");
-	  }
+	if (result == false) {
+	   printf("\nOpenR failed...\n");
+	}
 
-	  char string[32];
+	char str[32];
 
-	  result = _getline(string);
-	  printf("Got a line**\n");
+	while(1) {
+		result = _getline(str);
+		printf("Got a line**\n");
 
-	  if (result == false) {
-		   printf("\_getline failed...\n");
-	  }
+		if (result == false) {
+			printf("\_getline failed...\n");
+		}
 
-	  printf("%s", string);
+		printf("Received text is: %s", str);
 
+		// Clear string
+		memset(&str[0], 0, sizeof(str));
+	}
 
 
 

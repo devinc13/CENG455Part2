@@ -43,22 +43,28 @@ bool _getline(char *string) {
 		}
 	}
 
+	if (queueId == NULL) {
+		return false;
+	}
+
 	printf("\nWaiting for message\n");
 	BUFFER_MESSAGE_PTR msg_ptr;
 	msg_ptr = _msgq_receive(queueId, 0);
 
-	printf("\nThis should be our string\n");
-	printf("\n%s\n", msg_ptr->DATA);
+	if (msg_ptr == NULL) {
+	   printf("\nCould not receive a message\n");
+	   return false;
+	}
 
 	strncpy(string, msg_ptr->DATA, 32);
 
-	printf("_getline WORKS! - message received and copied");
 	_msg_free(msg_ptr);
 
 	return true;
 }
 
 _queue_id OpenW() {
+
 	printf("OpenW WORKS!");
 }
 
