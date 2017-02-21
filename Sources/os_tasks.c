@@ -183,8 +183,9 @@ void serial_task(os_task_param_t task_init_data)
 			}
 
 			break;
-		case 13:
 		case 10:
+			break;
+		case 13:
 			for (int i = 0; i < opened_for_read_size; i++) {
 				/*allocate a message*/
 				BUFFER_MESSAGE_PTR msg_ptr = (BUFFER_MESSAGE_PTR)_msg_alloc(message_pool);
@@ -195,8 +196,9 @@ void serial_task(os_task_param_t task_init_data)
 				}
 
 				msg_ptr->HEADER.TARGET_QID = _msgq_get_id(0, opened_for_read[i].queueId);
-				msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char) * 32;
-				strncpy(msg_ptr->DATA, buffer, 32);
+				msg_ptr->HEADER.SIZE = sizeof(MESSAGE_HEADER_STRUCT) + sizeof(char) * count;
+				strncpy(msg_ptr->DATA, buffer, count);
+				msg_ptr->DATA[count] = '\0';
 
 				_msgq_send(msg_ptr);
 				_msg_free(msg_ptr);
@@ -204,6 +206,8 @@ void serial_task(os_task_param_t task_init_data)
 
 			// Clear buffer
 			memset(&buffer[0], 0, sizeof(buffer));
+
+			printf("LINE CLEARED\n");
 
 			// Clear line from screen
 			while (count > 0) {
@@ -213,6 +217,7 @@ void serial_task(os_task_param_t task_init_data)
 
 				count--;
 			}
+
 
 			break;
 		default:
@@ -253,6 +258,14 @@ void Task1_task(os_task_param_t task_init_data)
 	   printf("\nOpenR failed task 1...\n");
 	}
 
+	_queue_id writeQ;
+
+	writeQ = OpenW();
+
+	if (writeQ == 0) {
+		printf("\nError getting write permission task 2\n");
+	}
+
 	char str[32];
 
 	while(1) {
@@ -264,6 +277,8 @@ void Task1_task(os_task_param_t task_init_data)
 		}
 
 		printf("Task one received: %s\n", str);
+
+		_putline(writeQ, str);
 
 		// Clear string
 		memset(&str[0], 0, sizeof(str));
@@ -281,6 +296,7 @@ void Task1_task(os_task_param_t task_init_data)
 */
 void Task2_task(os_task_param_t task_init_data)
 {
+	return;
 	_queue_id writeQ;
 
 	writeQ = OpenW();
@@ -309,6 +325,7 @@ void Task2_task(os_task_param_t task_init_data)
 */
 void Task3_task(os_task_param_t task_init_data)
 {
+	return;
 	bool result;
 
 	result = OpenR(_task_get_id());
@@ -324,17 +341,22 @@ void Task3_task(os_task_param_t task_init_data)
 		printf("\nError getting write permission task 3\n");
 	}
 
-	char str[32];
-	result = _getline(str);
+	char str[30];
+	strcpy(str, "This was sent from Task 3");
+
+	_putline(writeQ, str);
+
+	char str1[32];
+	result = _getline(str1);
 
 	if (result == false) {
 		printf("\_getline failed...\n");
 	}
 
-	printf("Task three received: %s\n", str);
+	printf("Task three received: %s\n", str1);
 
 	// Clear string
-	memset(&str[0], 0, sizeof(str));
+	memset(&str1[0], 0, sizeof(str));
 
 	result = Close();
 	printf(result ? "Successfully closed task 3\n" : "Error closing task 3\n");

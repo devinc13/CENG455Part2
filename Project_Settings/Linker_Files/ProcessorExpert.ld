@@ -4,13 +4,13 @@
 /*##                                                                         */
 /*##     Filename  : ProcessorExpert.ld                                      */
 /*##                                                                         */
-/*##     Project   : lab_part2_serial_echo                                   */
+/*##     Project   : CENG455Part2                                            */
 /*##                                                                         */
 /*##     Processor : MK64FN1M0VLL12                                          */
 /*##                                                                         */
 /*##     Compiler  : GNU C Compiler                                          */
 /*##                                                                         */
-/*##     Date/Time : 2017-01-30, 16:04, # CodeGen: 0                         */
+/*##     Date/Time : 2017-02-20, 15:11, # CodeGen: 0                         */
 /*##                                                                         */
 /*##     Abstract  :                                                         */
 /*##                                                                         */
