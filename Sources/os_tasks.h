@@ -94,6 +94,17 @@ void Task2_task(os_task_param_t task_init_data);
 */
 void Task3_task(os_task_param_t task_init_data);
 
+/*
+** ===================================================================
+**     Callback    : Task4_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task4_task(os_task_param_t task_init_data);
+
 /* END os_tasks */
 
 #ifdef __cplusplus

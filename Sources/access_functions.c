@@ -16,6 +16,7 @@ bool OpenR(_task_id stream_no)  {
 	 _task_block();
 	}
 
+	// Add to list of tasks with read permission
 	read_list new_read = {stream_no, task_qid};
 	opened_for_read[opened_for_read_size] = new_read;
 	opened_for_read_size++;
@@ -28,6 +29,7 @@ bool _getline(char *string) {
 	_queue_id queueId = 0;
 	_task_id taskId = _task_get_id();
 
+	// Check if we have read permission
 	for (int i = 0; i < opened_for_read_size; i++) {
 		if (opened_for_read[i].taskId == taskId) {
 			queueId = opened_for_read[i].queueId;
@@ -39,6 +41,7 @@ bool _getline(char *string) {
 	}
 
 	BUFFER_MESSAGE_PTR msg_ptr;
+	// Wait for a line to be sent
 	msg_ptr = _msgq_receive(queueId, 0);
 
 	if (msg_ptr == NULL) {
@@ -46,6 +49,7 @@ bool _getline(char *string) {
 	   return false;
 	}
 
+	// Copy line into the string that was passed in
 	strncpy(string, msg_ptr->DATA, 32);
 
 	_msg_free(msg_ptr);
@@ -65,6 +69,7 @@ _queue_id OpenW() {
 		return 0;
 	}
 
+	// Set write permission to this task
 	write_permission = _task_get_id();
 
 	_mutex_unlock(&openW_mutex);
@@ -85,6 +90,7 @@ bool _putline(_queue_id qid, char *string) {
 		return false;
 	}
 
+	// Send the string character by character to handler to be printed
 	strcat(string, "\n");
 	for (int i = 0; i < strlen(string); i++) {
 		  /*allocate a message*/

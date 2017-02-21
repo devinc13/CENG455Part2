@@ -61,7 +61,6 @@ _queue_id server_qid;
 void serial_task(os_task_param_t task_init_data)
 {
 	// This is the "Handler"
-
 	printf("serialTask Created!\n\r");
 
 	char buffer[32] = "";
@@ -90,13 +89,13 @@ void serial_task(os_task_param_t task_init_data)
 
    MUTEX_ATTR_STRUCT mutexattr1;
 
-   /* Initialize mutex attributes */
+   /* Initialize mutex attributes for Read */
    if (_mutatr_init(&mutexattr1) != MQX_OK) {
       printf("Initialize mutex attributes failed.\n");
       _task_block();
    }
 
-   /* Initialize the mutex */
+   /* Initialize the mutex for Read */
    if (_mutex_init(&openR_mutex, &mutexattr1) != MQX_OK) {
       printf("Initialize read mutex failed.\n");
       _task_block();
@@ -106,13 +105,13 @@ void serial_task(os_task_param_t task_init_data)
 
    MUTEX_ATTR_STRUCT mutexattr2;
 
-   /* Initialize mutex attributes */
+   /* Initialize mutex attributes for Write */
    if (_mutatr_init(&mutexattr2) != MQX_OK) {
       printf("Initialize mutex attributes failed.\n");
       _task_block();
    }
 
-   /* Initialize the mutex */
+   /* Initialize the mutex for Write */
    if (_mutex_init(&openW_mutex, &mutexattr2) != MQX_OK) {
       printf("Initialize write mutex failed.\n");
       _task_block();
@@ -126,7 +125,8 @@ void serial_task(os_task_param_t task_init_data)
 #endif
     
 	CHARACTER_MESSAGE_PTR msg_ptr;
-//	printf("Waiting for message\n");
+
+	// Wait for message from interrupt
 	msg_ptr = _msgq_receive(server_qid, 0);
 
 	if (msg_ptr == NULL) {
@@ -143,6 +143,7 @@ void serial_task(os_task_param_t task_init_data)
 
 	int input = msg_ptr->DATA;
 
+	// Check what character we recieved - see if it's a special character
 	switch(input){
 		case 8:
 			printf("Backspace\n");
@@ -173,7 +174,6 @@ void serial_task(os_task_param_t task_init_data)
 		case 21:
 			printf("Erase Line\n");
 
-
 			while (count > 0) {
 				UART_DRV_SendDataBlocking(myUART_IDX, "\b", sizeof(msg_ptr->DATA), 1000);
 				UART_DRV_SendDataBlocking(myUART_IDX, " ", sizeof(msg_ptr->DATA), 1000);
@@ -184,6 +184,7 @@ void serial_task(os_task_param_t task_init_data)
 
 			break;
 		case 10:
+			// Don't print newlines
 			break;
 		case 13:
 			for (int i = 0; i < opened_for_read_size; i++) {
@@ -207,8 +208,8 @@ void serial_task(os_task_param_t task_init_data)
 			// Clear buffer
 			memset(&buffer[0], 0, sizeof(buffer));
 
-			printf("LINE CLEARED\n");
-
+			// Move to new line
+			UART_DRV_SendDataBlocking(myUART_IDX, "\n", sizeof(msg_ptr->DATA), 1000);
 			// Clear line from screen
 			while (count > 0) {
 				UART_DRV_SendDataBlocking(myUART_IDX, "\b", sizeof(msg_ptr->DATA), 1000);
@@ -217,7 +218,6 @@ void serial_task(os_task_param_t task_init_data)
 
 				count--;
 			}
-
 
 			break;
 		default:
@@ -252,23 +252,19 @@ void serial_task(os_task_param_t task_init_data)
 */
 void Task1_task(os_task_param_t task_init_data)
 {
-	bool result = OpenR(_task_get_id());
-
-	if (result == false) {
-	   printf("\nOpenR failed task 1...\n");
-	}
-
-	_queue_id writeQ;
-
-	writeQ = OpenW();
-
-	if (writeQ == 0) {
-		printf("\nError getting write permission task 2\n");
-	}
-
-	char str[32];
-
+	// Test reading and writing from both task 1 and 2
 	while(1) {
+		bool result = OpenR(_task_get_id());
+
+		if (result == false) {
+		   printf("\nOpenR failed task 1...\n");
+		   _task_block();
+		}
+
+		_queue_id writeQ;
+
+		char str[32];
+
 		result = _getline(str);
 
 		if (result == false) {
@@ -278,10 +274,17 @@ void Task1_task(os_task_param_t task_init_data)
 
 		printf("Task one received: %s\n", str);
 
+		writeQ = 0;
+		while (writeQ == 0) {
+			writeQ = OpenW();
+		}
+
 		_putline(writeQ, str);
 
 		// Clear string
 		memset(&str[0], 0, sizeof(str));
+		bool closeresult = Close();
+		printf(closeresult ? "Successfully closed task 2\n" : "Error closing task 2\n");
 	}
 }
 
@@ -296,22 +299,50 @@ void Task1_task(os_task_param_t task_init_data)
 */
 void Task2_task(os_task_param_t task_init_data)
 {
-	return;
-	_queue_id writeQ;
+	// Test reading and writing from both task 1 and 2
+	while(1) {
+		bool result = OpenR(_task_get_id());
 
-	writeQ = OpenW();
+		if (result == false) {
+		   printf("\nOpenR failed task 1...\n");
+		   _task_block();
+		}
 
-	if (writeQ == 0) {
-		printf("\nError getting write permission task 2\n");
+		_queue_id writeQ;
+
+		char str[32];
+
+		result = _getline(str);
+
+		if (result == false) {
+			printf("\_getline failed task 1...\n");
+			_task_block();
+			break;
+		}
+
+		printf("Task one received: %s\n", str);
+
+		char str1[30];
+		strcpy(str1, "hardcoded string");
+
+		writeQ = 0;
+		while (writeQ == 0) {
+			writeQ = OpenW();
+		}
+
+
+		_putline(writeQ, str1);
+
+		memset(&str1[0], 0, sizeof(str1));
+
+		// Clear string
+		memset(&str[0], 0, sizeof(str));
+		bool closeresult = Close();
+		printf(closeresult ? "Successfully closed task 2\n" : "Error closing task 2\n");
 	}
 
-	char str[30];
-	strcpy(str, "This was sent from Task 2");
 
-	_putline(writeQ, str);
-
-	bool result = Close();
-	printf(result ? "Successfully closed task 2\n" : "Error closing task 2\n");
+	return;
 }
 
 /*
@@ -325,6 +356,7 @@ void Task2_task(os_task_param_t task_init_data)
 */
 void Task3_task(os_task_param_t task_init_data)
 {
+	// Currently disabled for testing
 	return;
 	bool result;
 
@@ -360,6 +392,35 @@ void Task3_task(os_task_param_t task_init_data)
 
 	result = Close();
 	printf(result ? "Successfully closed task 3\n" : "Error closing task 3\n");
+}
+
+/*
+** ===================================================================
+**     Callback    : Task4_task
+**     Description : Task function entry.
+**     Parameters  :
+**       task_init_data - OS task parameter
+**     Returns : Nothing
+** ===================================================================
+*/
+void Task4_task(os_task_param_t task_init_data)
+{
+
+  // Currently disabled for testing
+  return;
+#ifdef PEX_USE_RTOS
+  while (1) {
+#endif
+    /* Write your code here ... */
+
+
+
+
+
+
+#ifdef PEX_USE_RTOS
+  }
+#endif
 }
 
 /* END os_tasks */
